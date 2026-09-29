@@ -13,6 +13,7 @@ class EchoClient:
         self.num_entries = 0
         self.limit = 10
         self.mean = 0
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def calculate_rtt(self):
         mean = 0
@@ -23,7 +24,6 @@ class EchoClient:
         print(f"Mean RTT = {mean}")
 
     def send_ping(self):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         epoch_time = int(time.time())
         time_str = str(epoch_time)
         self.client.sendto(time_str.encode(), (self.host, self.port))
@@ -44,5 +44,5 @@ class EchoClient:
         self.timer.start()
 
 if __name__ == "__main__":
-    cl = EchoClient()
+    cl = EchoClient("localhost", 8001)
     cl.start()
